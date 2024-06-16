@@ -1,8 +1,13 @@
 const express = require('express');
-const router = express.Router();
+const authMiddleware = require('../middlewares/authMiddleware');
 const itemController = require('../controllers/itemController');
 
-router.get('/items', itemController.getItems);
-router.post('/items', itemController.createItem);
+const router = express.Router();
+
+router.get('/items', authMiddleware, itemController.getItems);
+router.get('/items/:id', authMiddleware, itemController.getItem);
+router.post('/items', authMiddleware, itemController.createItem);
+router.put('/items/:id', authMiddleware, itemController.updateItem);
+router.delete('/items/:id', authMiddleware, itemController.deleteItem);
 
 module.exports = router;
